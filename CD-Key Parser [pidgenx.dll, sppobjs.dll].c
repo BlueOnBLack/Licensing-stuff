@@ -992,3 +992,160 @@ __int64 __fastcall sub_180094468(_WORD *a1, __int64 a2, _QWORD *a3)
   }
   return result;
 }
+__int64 __fastcall sub_18013CFC4(unsigned __int16 a1)
+{
+  int v2; // edx
+  int v3; // edx
+
+  if ( a1 <= 0x56u )
+  {
+    if ( a1 != 86 )
+    {
+      if ( a1 <= 0x44u )
+      {
+        if ( a1 != 68 )
+        {
+          if ( a1 <= 0x37u )
+          {
+            switch ( a1 )
+            {
+              case '7':
+                return 21i64;
+              case '-':
+                return 24i64;
+              case '2':
+                return 17i64;
+              case '3':
+                return 18i64;
+              case '4':
+                return 19i64;
+              case '6':
+                return 20i64;
+            }
+            return 25i64;
+          }
+          if ( a1 == 56 )
+            return 22i64;
+          v2 = a1 - 57;
+          if ( a1 == 57 )
+            return 23i64;
+LABEL_20:
+          v3 = v2 - 9;
+          if ( !v3 )
+            return 0i64;
+          if ( v3 == 1 )
+            return 1i64;
+          return 25i64;
+        }
+        return 2i64;
+      }
+      if ( a1 <= 0x4Du )
+      {
+        if ( a1 != 77 )
+        {
+          if ( a1 != 70 )
+          {
+            if ( a1 != 71 )
+            {
+              if ( a1 != 72 )
+              {
+                if ( a1 != 74 )
+                {
+                  if ( a1 == 75 )
+                    return 7i64;
+                  return 25i64;
+                }
+                return 6i64;
+              }
+              return 5i64;
+            }
+            return 4i64;
+          }
+          return 3i64;
+        }
+        return 8i64;
+      }
+      if ( a1 != 80 )
+      {
+        if ( a1 != 81 )
+        {
+          if ( a1 != 82 )
+          {
+            if ( a1 != 84 )
+              return 25i64;
+            return 12i64;
+          }
+          return 11i64;
+        }
+        return 10i64;
+      }
+      return 9i64;
+    }
+    return 13i64;
+  }
+  if ( a1 <= 0x6Bu )
+  {
+    if ( a1 == 107 )
+      return 7i64;
+    if ( a1 > 0x64u )
+    {
+      if ( a1 != 102 )
+      {
+        if ( a1 != 103 )
+        {
+          if ( a1 != 104 )
+          {
+            if ( a1 != 106 )
+              return 25i64;
+            return 6i64;
+          }
+          return 5i64;
+        }
+        return 4i64;
+      }
+      return 3i64;
+    }
+    if ( a1 == 100 )
+      return 2i64;
+    if ( a1 != 87 )
+    {
+      if ( a1 != 88 )
+      {
+        v2 = a1 - 89;
+        if ( a1 != 89 )
+          goto LABEL_20;
+        return 16i64;
+      }
+      return 15i64;
+    }
+    return 14i64;
+  }
+  if ( a1 != 109 )
+  {
+    switch ( a1 )
+    {
+      case 'p':
+        return 9i64;
+      case 'q':
+        return 10i64;
+      case 'r':
+        return 11i64;
+      case 't':
+        return 12i64;
+      case 'v':
+        return 13i64;
+    }
+    if ( a1 != 119 )
+    {
+      if ( a1 != 120 )
+      {
+        if ( a1 != 121 )
+          return 25i64;
+        return 16i64;
+      }
+      return 15i64;
+    }
+    return 14i64;
+  }
+  return 8i64;
+}
