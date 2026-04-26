@@ -128,7 +128,7 @@ struct u128 {
     unsigned char data[16];
 };
 
-// Original Name: sub_18013C8DC
+// Original Name: sub_18013CC20
 NTSTATUS EncodeProductKey(const wchar_t* key, u128* outBin, DWORD* outType) {
     if (!key || !outBin) return 0xC000000D;
 

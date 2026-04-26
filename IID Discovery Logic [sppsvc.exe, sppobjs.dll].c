@@ -125,6 +125,43 @@ sub_14007527C        → convert to string (decimal IID)
 [Client]
 Receive Installation ID string
 
+// Dump
+
+CSppPhoneBinding::_InternalQueryInterface(_GUID const &,void * *)	.text	000000018002A77C	000001A4	00000028	00000008	R	.	.	.	.	.	T	.
+CSppPhoneBinding::~CSppPhoneBinding(void)	.text	0000000180035BFC	000000C2	00000028		R	.	.	.	.	.	T	.
+CSppPhoneBinding::Initialize(SPP_PLUGIN_OBJECT_INITDATA *)	.text	0000000180078984	00000315	00000078	00000020	R	.	.	.	.	B	T	.
+CSppPhoneBinding::OnParamChange(CSppParamsBaseT<CSppPhoneBinding,ISppBinding,&_GUID const IID_ISppBinding>::CParamChange *)	.text	0000000180078C9C	000005AB	00000058	00000020	R	.	.	.	.	.	T	.
+CSppPhoneBinding::OnParamRetrieve(ushort const *)	.text	0000000180079248	00000587	00000178	00000190	R	.	.	.	.	B	T	.
+CSppPhoneBinding::Authenticate(ISppBinding *)	.text	00000001800797D0	000003EE	00000158	00000020	R	.	.	.	.	B	T	.
+CSppPhoneBinding::Collect(void)	.text	0000000180079BC0	000007C9	000001C0	00018F01	R	.	.	.	.	B	T	.
+CSppPhoneBinding::Load(void)	.text	000000018007A38C	00000320	000000D8	00000018	R	.	.	.	.	B	T	.
+CSppPhoneBinding::Save(void)	.text	000000018007A6AC	000002F2	000000F0		R	.	.	.	.	B	T	.
+CSppPhoneBinding::Notify(ushort const *,ISppParamsReadOnly *,ISppNamedParamsReadWrite *)	.text	000000018007A9A0	0000026A	00000058	00000018	R	.	.	.	.	B	T	.
+CSppPhoneBinding::ControlService(SPP_PLUGIN_SERVICE_CONTROL_CODE)	.text	000000018007AC0C	000001FF	000034C4	00000010	R	.	.	.	.	.	.	.
+CSppPhoneBinding::ResetBindingState(void)	.text	000000018007AE0C	000000AF	00000028		R	.	.	.	.	.	T	.
+CSppPhoneBinding::ResetPrivateState(void)	.text	000000018007AEBC	0000014B	00000028		R	.	.	.	.	.	T	.
+CSppPhoneBinding::PeekOptionalItemByName(ushort const *,SPP_PARAM_TYPE,SPP_PARAM *)	.text	000000018007B008	00000109	00000028	0000500D	R	.	.	.	.	.	T	.
+CSppPhoneBinding::ObtainIidData(void)	.text	000000018007B114	000001FF	00000088	00000020	R	.	.	.	.	B	T	.
+CSppPhoneBinding::ObtainHwidBlockAndPkeyData(void)	.text	000000018007B314	00000432	000001A0	0000001C	R	.	.	.	.	B	T	.
+CSppPhoneBinding::ObtainHwidBlockAndPkeyData(ushort const *,ushort const *,ushort const *,ushort const *,ushort const *,uint,uchar const *,uint *,uchar * *,ulong *,uint *,uchar * *)	.text	000000018007B748	00000400	00000130	00000028	R	.	.	.	.	B	T	.
+CSppPhoneBinding::AuthenticatePhoneSignature(void)	.text	000000018007BB48	00000194	74398768	00000004	R	.	.	.	.	B	T	.
+CSppPhoneBinding::ParseBindingBlob(uchar const *,uint,uchar const * *,uint *,uchar const * *,uint *)	.text	000000018007BCDC	0000010D	00000028	00000030	R	.	.	.	.	.	T	.
+CSppPhoneBinding::GetCachedHWIDPKeyInfo(ushort const *,ushort const *,ushort const *,ushort const *,uint *,uchar * *,uint *,uchar * *)	.text	000000018007BDEC	000002D2	00000198	00000048	R	.	.	.	.	B	T	.
+CSppPhoneBinding::SetCachedHWIDPKeyInfo(ushort const *,ushort const *,ushort const *,ushort const *,uint,uchar const *,uint,uchar const *)	.text	000000018007C0C0	00000297	00000158	0B880F64	R	.	.	.	.	B	T	.
+CSppPhoneBinding::GetBindingFromTrustedStore(ushort const *,ushort const *,ushort const *,ushort const *,uint,uchar const *,uint *,uchar * *)	.text	000000018007C358	00000399	000002D8	00000040	R	.	.	.	.	B	T	.
+CSppPhoneBinding::SetBindingInfoToTrustedStore(ushort const *,ushort const *,ushort const *,ushort const *,uint,uchar const *,uint,uchar const *)	.text	000000018007C6F4	000003DA	000002E8	00000040	R	.	.	.	.	B	T	.
+CSppPhoneBinding::DeleteBindingFromTrustedStore(ushort const *,ushort const *,ushort const *,ushort const *)	.text	000000018007CAD0	0000011E	00000278	00000028	R	.	.	.	.	.	T	.
+CSppPhoneBinding::GetBindingFromTokenStore(ushort const *,ushort const *,ushort * *)	.text	000000018007CBF0	00000158	00000498		R	.	.	.	.	.	T	.
+CSppPhoneBinding::DeleteBindingFromTokenStore(ushort const *,ushort const *)	.text	000000018007CD48	000001C1	00000A78		R	.	.	.	.	B	T	.
+CSppPhoneBinding::SetBindingInfoToTokenStore(ushort const *,ushort const *,ushort const *)	.text	000000018007CF0C	00000255	000004A8		R	.	.	.	.	B	T	.
+CSppPhoneBinding::GetTokenStoreTokenId(ushort const *,uint,ushort *)	.text	000000018007D164	000000CA	00000028		R	.	.	.	.	.	T	.
+CSppPhoneBinding::GetStorePropertyName(ushort const *,ushort const *,uint,ushort *)	.text	000000018007D230	00000129	00000028	00000010	R	.	.	.	.	.	T	.
+CSppPhoneBinding::GetPkeyActivationDataFromSkuId(SPP_PARAM const *,SPP_PARAM * *)	.text	000000018007D35C	000001FC	00000068	00000020	R	.	.	.	.	B	T	.
+CSppPhoneBinding::GetPkeyActivationDataFromProductKey(SPP_PARAM const *,SPP_PARAM * *,SPP_PARAM * *,SPP_PARAM * *)	.text	000000018007D558	00000271	00000088	00004FA5	R	.	.	.	.	B	T	.
+CSppPhoneBinding::HandleUninstallProofOfPurchase(ushort const *,ushort const *,ushort const *)	.text	000000018007D7CC	00000199	00000048	00000020	R	.	.	.	.	B	T	.
+CSppPhoneBinding::HandleSlReArm(ushort const *,ushort const *)	.text	000000018007D968	0000023F	00000078	00000011	R	F	.	.	.	B	T	.
+CSppPhoneBinding::LogEventHelper(ushort,uint,ushort const *,int,long)	.text	000000018007DBA8	00000166	00000088	00000018	R	.	.	.	.	B	T	.
+
 // NTDLL
 
 HRESULT SLGenerateOfflineInstallationIdEx(
@@ -887,6 +924,7 @@ LABEL_69:
 
 // SPPOBJS.dll
 
+// CSppPhoneBinding::Authenticate
 _int64 __fastcall sub_180107970(_QWORD *a1, __int64 *a2)
 {
   __int64 v2; // rax
@@ -1169,6 +1207,7 @@ LABEL_42:
   return (unsigned int)v7;
 }
 
+// CSppPhoneBinding::Collect
 __int64 __fastcall sub_180108110(_QWORD *a1)
 {
   int v2; // eax
@@ -1499,6 +1538,7 @@ LABEL_57:
 
 // SPPOBJS.dll
 
+// Notification Dispatcher
 __int64 __fastcall sub_18010AD10(__int64 a1, const wchar_t *a2, _QWORD *a3)
 {
   _QWORD *v3; // rax
@@ -1715,6 +1755,7 @@ LABEL_47:
   return (unsigned int)v11;
 }
 
+// Deposit Logic
 __int64 __fastcall sub_180109828(_QWORD *a1)
 {
   int v2; // edx
@@ -1887,6 +1928,7 @@ LABEL_36:
   return v5;
 }
 
+// Secure Writer
 __int64 __fastcall sub_18010D1A4(__int64 a1, __int64 a2, __int64 a3, __int64 a4)
 {
   __int64 v8; // rdx
@@ -1924,6 +1966,7 @@ LABEL_4:
 
 // SPPOBJS.dll ~ Main Interface
 
+// CSppPhoneBinding::InternalQueryInterface
 __int64 __fastcall sub_18008D460(_QWORD *a1, const wchar_t *a2, __int64 a3)
 __int64 __fastcall sub_18008DE60(_QWORD *a1, const wchar_t *a2, __int64 a3)
 {
@@ -1950,6 +1993,7 @@ __int64 __fastcall sub_18008DE60(_QWORD *a1, const wchar_t *a2, __int64 a3)
   return v7;
 }
 
+// CSppPhoneBinding::OnParamRetrieve
 __int64 __fastcall sub_18010C298(_QWORD *a1, const wchar_t *a2)
 {
   __int64 v2; // rax
@@ -2251,6 +2295,7 @@ LABEL_54:
   return v7;
 }
 
+// CSppPhoneBinding::ObtainHwidBlockAndPkeyData
 __int64 __fastcall sub_18010B5F4(_QWORD *a1)
 {
   __int64 v1; // rax
@@ -2475,6 +2520,7 @@ LABEL_35:
   return v5;
 }
 
+// CSppPhoneBinding::ObtainHwidBlockAndPkeyData
 __int64 __fastcall sub_18010B140(
         _QWORD *a1,
         int a2,
@@ -2706,6 +2752,7 @@ LABEL_29:
   return (unsigned int)v17;
 }
 
+// CSppPhoneBinding::ParseBindingBlob
 __int64 __fastcall sub_18010C87C(
         __int64 a1,
         unsigned int *a2,
@@ -2749,6 +2796,7 @@ __int64 __fastcall sub_18010C87C(
   return v7;
 }
 
+// CSppPhoneBinding::GetCachedHWIDPKeyInfo
 __int64 __fastcall sub_180108E90(
         __int64 a1,
         __int64 a2,
@@ -2883,6 +2931,9 @@ LABEL_25:
 }
 
 // if ( uBytes != 32 )
+// v15 = sub_18010CC70(v28, 32i64, a7, &uBytes);
+
+// CSppPhoneBinding::GetBindingFromTrustedStore
 __int64 __fastcall sub_180108C0C(
         __int64 a1,
         __int64 a2,
@@ -3006,6 +3057,7 @@ LABEL_21:
   return v16;
 }
 
+// CSppPhoneBinding::ParseBindingBlob
 __int64 __fastcall sub_18010CD98(__int64 a1, size_t a2, void *a3)
 {
   unsigned int v6; // ebx
@@ -3037,6 +3089,7 @@ LABEL_7:
   return v6;
 }
 
+// CSppPhoneBinding::SetCachedHWIDPKeyInfo
 __int64 __fastcall sub_18010D564(
         __int64 a1,
         __int64 a2,
@@ -3136,6 +3189,8 @@ LABEL_22:
 }
 
 // v28 = 32;
+// v15 = sub_18008ED8C(32i64, a8, &uBytes);
+
 __int64 __fastcall sub_18010D2C0(
         __int64 a1,
         __int64 a2,
@@ -4133,4 +4188,108 @@ __int64 __fastcall sub_180081D20(unsigned int *a1, unsigned int *a2)
     sub_18016C850();
   }
   return 1i64;
+}
+
+// BCrypt APi
+
+// __int64 CCryptLoaderT<CBCryptLoaderT<CEmptyType>>::???
+__int64 sub_180080F10()
+{
+  return sub_180083E08(&unk_1801A4058, sub_1800F4220);
+}
+
+// __int64 CCryptLoaderT<CBCryptLoaderT<CEmptyType>>::DelayedInit()
+__int64 sub_1800F4220()
+{
+  int v0; // eax
+  int v1; // ebx
+  HMODULE Library; // rax
+  __int64 v3; // rdi
+  DWORD LastError; // eax
+  __int64 v6; // [rsp+30h] [rbp+8h] BYREF
+  LPCWSTR lpLibFileName; // [rsp+38h] [rbp+10h] BYREF
+
+  lpLibFileName = 0i64;
+  v6 = 0i64;
+  v0 = sub_1800F57F8(&lpLibFileName);
+  v1 = v0;
+  if ( v0 < 0 )
+    goto LABEL_2;
+  Library = LoadLibraryExW(lpLibFileName, 0i64, 0);
+  sub_1800B6E80(&v6, Library);
+  v3 = v6;
+  if ( !v6 )
+  {
+    LastError = GetLastError();
+    v0 = sub_180091B54(LastError);
+    v1 = v0;
+LABEL_2:
+    sub_18008A114(v0);
+    goto LABEL_7;
+  }
+  v0 = sub_1800F59F0(v6);
+  v1 = v0;
+  if ( v0 < 0 )
+    goto LABEL_2;
+  v6 = 0i64;
+  sub_1800B6E80((char *)&xmmword_1801A3FD0 + 8, v3);
+  LODWORD(xmmword_1801A3FD0) = 0;
+LABEL_7:
+  if ( v1 < 0 )
+  {
+    LODWORD(xmmword_1801A3FD0) = v1;
+    v1 = 1;
+  }
+  sub_18008D904(v1);
+  sub_1800B6D98(&v6);
+  sub_180089510(&lpLibFileName);
+  return (unsigned int)v1;
+}
+
+// __int64 __fastcall CBCryptLoaderT<CEmptyType>::InitFunctionPointers(HMODULE hModule)
+__int64 __fastcall sub_1800F59F0(__int64 a1)
+{
+  int v2; // eax
+  unsigned int v3; // ebx
+
+  v2 = sub_1800F28B8(a1, &unk_1801A3FE0);
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2AC4(a1, &unk_1801A3FE8);
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2A6C(a1, &unk_1801A3FF0);
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2968(a1, &unk_1801A3FF8, "BCryptGenRandom");
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2968(a1, &unk_1801A4000, "BCryptHashData");
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2968(a1, &unk_1801A4008, "BCryptFinishHash");
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2A14(a1, &unk_1801A4010);
+  v3 = v2;
+  if ( v2 < 0 )
+    goto LABEL_12;
+  v2 = sub_1800F2968(a1, &unk_1801A4018, "BCryptDestroyKey");
+  v3 = v2;
+  if ( v2 < 0
+    || (v2 = sub_1800F2968(a1, &unk_1801A4020, "BCryptDestroyHash"), v3 = v2, v2 < 0)
+    || (v2 = sub_1800F2C7C(a1, &unk_1801A4028), v3 = v2, v2 < 0)
+    || (v2 = sub_1800F2910(a1, &unk_1801A4030), v3 = v2, v2 < 0) )
+  {
+LABEL_12:
+    sub_18008A114(v2);
+  }
+  sub_18008D904(v3);
+  return v3;
 }
