@@ -118,53 +118,6 @@ public string GetExtendedPid()
 	);
 }
 
-/**
- * Origin: Sppobjs.dll
- * __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryEncode(__m128i *a1, __int64 a2, unsigned __int16 **a3)
- */
- 
- // MSVC doesn't support __int128 natively. Use a struct to match __m128i.
-struct u128 {
-    unsigned char data[16];
-};
-
-// Original Name: sub_18013CC20
-NTSTATUS EncodeProductKey(const wchar_t* key, u128* outBin, DWORD* outType) {
-    if (!key || !outBin) return 0xC000000D;
-
-    // Zero out the buffer
-    memset(outBin->data, 0, 16);
-
-    int nPos = -1, count = 0;
-    const wchar_t* charset = L"BCDFGHJKMPQRTVWXY2346789";
-
-    for (int i = 0; key[i] && count < 25; i++) {
-        if (key[i] == L'-') continue;
-        if (key[i] == L'N') { nPos = count; continue; }
-
-        int val = -1;
-        for (int j = 0; j < 24; j++) if (charset[j] == key[i]) val = j;
-        if (val == -1) return 0xC0000001;
-
-        unsigned int carry = val;
-        for (int j = 0; j < 16; j++) {
-            unsigned int tmp = outBin->data[j] * 24 + carry;
-            outBin->data[j] = (unsigned char)(tmp & 0xFF);
-            carry = tmp >> 8;
-        }
-        count++;
-    }
-
-    if (nPos != -1) {
-        // Modern Key logic: sub_18013D1B4
-        outBin->data[14] = (outBin->data[14] & 0xF7) | 0x08;
-        outBin->data[15] = (unsigned char)nPos;
-    }
-
-    if (outType) *outType = (nPos != -1);
-    return 0;
-}
-
  /**
  * Origin: PidgenX.dll
  * __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryEncode(__m128i *a1)
