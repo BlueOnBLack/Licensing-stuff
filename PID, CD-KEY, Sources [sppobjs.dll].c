@@ -164,6 +164,409 @@ NTSTATUS EncodeProductKey(const wchar_t* key, u128* outBin, DWORD* outType) {
     if (outType) *outType = (nPos != -1);
     return 0;
 }
+
+ /**
+ * Origin: PidgenX.dll
+ * __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryEncode(__m128i *a1)
+ * Takes the String (input) and packs it into Binary (storage).
+ 
+ __int64 __fastcall BinaryEncode(
+    _WORD  *a1,   // [IN]  String (Default: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX")
+    _OWORD *a2,   // [OUT] Binary (Output: 16-byte raw data)
+    __int64 a3,   // [IN]  Length (Default: 29)
+    _DWORD *a4    // [OUT] N-Bit  (Output: 0 for Standard, 1 for N-Edition)
+ */
+ 
+__int64 __fastcall sub_180008DB4(_WORD *a1, __int64 a2, _BYTE *a3, __int64 a4, int *a5)
+{
+  unsigned int v5; // ebx
+  int v7; // r14d
+  unsigned int v8; // esi
+  unsigned int v9; // ebp
+  unsigned int v10; // edi
+  unsigned int v12; // ecx
+  unsigned int v13; // ecx
+  unsigned int v14; // ecx
+  unsigned int v15; // ecx
+  unsigned int v16; // ecx
+  unsigned int v17; // ecx
+  int v18; // eax
+  unsigned int v19; // ecx
+  unsigned int v20; // ecx
+  unsigned int v21; // ecx
+  unsigned int v22; // ecx
+  unsigned int v23; // ecx
+  unsigned int v24; // ecx
+  unsigned int v25; // ecx
+  unsigned int v26; // ecx
+  unsigned int v27; // ecx
+  unsigned int v28; // ecx
+  unsigned int v29; // ecx
+  unsigned int v30; // ecx
+  unsigned int v31; // ecx
+  unsigned int v32; // ecx
+  unsigned int v33; // ecx
+  unsigned int v34; // ecx
+  unsigned int v35; // ecx
+  unsigned int v36; // ecx
+  unsigned int v37; // ecx
+  unsigned int v38; // ecx
+  unsigned int v39; // ecx
+  unsigned int v40; // ecx
+
+  v5 = 0;
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  while ( v10 < 0x19 )
+  {
+    if ( ((*a1 - 78) & 0xFFDF) == 0 )
+    {
+      if ( v7 || v10 >= 0x18 )
+        break;
+      v7 = 1;
+      memmove(a3 + 1, a3, v10);
+      *a3 = v10;
+      goto LABEL_82;
+    }
+    v12 = (unsigned __int16)*a1;
+    if ( v12 > 0x56 )
+    {
+      if ( v12 > 0x6B )
+      {
+        v33 = v12 - 109;
+        if ( !v33 )
+        {
+LABEL_77:
+          LOBYTE(v17) = 8;
+          goto LABEL_78;
+        }
+        v34 = v33 - 3;
+        if ( !v34 )
+        {
+LABEL_76:
+          LOBYTE(v17) = 9;
+          goto LABEL_78;
+        }
+        v35 = v34 - 1;
+        if ( !v35 )
+        {
+LABEL_75:
+          LOBYTE(v17) = 10;
+          goto LABEL_78;
+        }
+        v36 = v35 - 1;
+        if ( !v36 )
+        {
+LABEL_74:
+          LOBYTE(v17) = 11;
+          goto LABEL_78;
+        }
+        v37 = v36 - 2;
+        if ( v37 )
+        {
+          v38 = v37 - 2;
+          if ( !v38 )
+          {
+LABEL_73:
+            LOBYTE(v17) = 13;
+            goto LABEL_78;
+          }
+          v39 = v38 - 1;
+          if ( !v39 )
+          {
+LABEL_72:
+            LOBYTE(v17) = 14;
+            goto LABEL_78;
+          }
+          v40 = v39 - 1;
+          if ( !v40 )
+          {
+LABEL_71:
+            LOBYTE(v17) = 15;
+            goto LABEL_78;
+          }
+          if ( v40 != 1 )
+            break;
+          goto LABEL_70;
+        }
+        goto LABEL_40;
+      }
+      if ( v12 != 107 )
+      {
+        if ( v12 > 0x64 )
+        {
+          v30 = v12 - 102;
+          if ( !v30 )
+            goto LABEL_60;
+          v31 = v30 - 1;
+          if ( !v31 )
+            goto LABEL_59;
+          v32 = v31 - 1;
+          if ( !v32 )
+            goto LABEL_58;
+          if ( v32 != 2 )
+            break;
+LABEL_57:
+          LOBYTE(v17) = 6;
+          goto LABEL_78;
+        }
+        if ( v12 != 100 )
+        {
+          v28 = v12 - 87;
+          if ( !v28 )
+            goto LABEL_72;
+          v29 = v28 - 1;
+          if ( !v29 )
+            goto LABEL_71;
+          v20 = v29 - 1;
+          if ( v20 )
+          {
+LABEL_48:
+            v17 = v20 - 9;
+            if ( v17 )
+            {
+              if ( v17 != 1 )
+                break;
+            }
+            else
+            {
+              LOBYTE(v17) = 0;
+            }
+            goto LABEL_78;
+          }
+LABEL_70:
+          LOBYTE(v17) = 16;
+          goto LABEL_78;
+        }
+LABEL_52:
+        LOBYTE(v17) = 2;
+        goto LABEL_78;
+      }
+      goto LABEL_35;
+    }
+    if ( v12 == 86 )
+      goto LABEL_73;
+    if ( v12 > 0x44 )
+    {
+      if ( v12 > 0x4D )
+      {
+        v25 = v12 - 80;
+        if ( !v25 )
+          goto LABEL_76;
+        v26 = v25 - 1;
+        if ( !v26 )
+          goto LABEL_75;
+        v27 = v26 - 1;
+        if ( !v27 )
+          goto LABEL_74;
+        if ( v27 != 2 )
+          break;
+LABEL_40:
+        LOBYTE(v17) = 12;
+        goto LABEL_78;
+      }
+      if ( v12 == 77 )
+        goto LABEL_77;
+      v21 = v12 - 70;
+      if ( !v21 )
+      {
+LABEL_60:
+        LOBYTE(v17) = 3;
+        goto LABEL_78;
+      }
+      v22 = v21 - 1;
+      if ( !v22 )
+      {
+LABEL_59:
+        LOBYTE(v17) = 4;
+        goto LABEL_78;
+      }
+      v23 = v22 - 1;
+      if ( !v23 )
+      {
+LABEL_58:
+        LOBYTE(v17) = 5;
+        goto LABEL_78;
+      }
+      v24 = v23 - 2;
+      if ( !v24 )
+        goto LABEL_57;
+      if ( v24 != 1 )
+        break;
+LABEL_35:
+      LOBYTE(v17) = 7;
+      goto LABEL_78;
+    }
+    if ( v12 == 68 )
+      goto LABEL_52;
+    if ( v12 <= 0x37 )
+    {
+      if ( v12 == 55 )
+      {
+        LOBYTE(v17) = 21;
+      }
+      else
+      {
+        v13 = v12 - 45;
+        if ( !v13 )
+        {
+          if ( v9 > 0x17 )
+            break;
+          v18 = 8521760;
+          if ( !_bittest(&v18, v9) || v8 >= 4 )
+            break;
+          ++v8;
+          goto LABEL_83;
+        }
+        v14 = v13 - 5;
+        if ( v14 )
+        {
+          v15 = v14 - 1;
+          if ( v15 )
+          {
+            v16 = v15 - 1;
+            if ( v16 )
+            {
+              if ( v16 != 2 )
+                break;
+              LOBYTE(v17) = 20;
+            }
+            else
+            {
+              LOBYTE(v17) = 19;
+            }
+          }
+          else
+          {
+            LOBYTE(v17) = 18;
+          }
+        }
+        else
+        {
+          LOBYTE(v17) = 17;
+        }
+      }
+      goto LABEL_78;
+    }
+    v19 = v12 - 56;
+    if ( v19 )
+    {
+      v20 = v19 - 1;
+      if ( v20 )
+        goto LABEL_48;
+      LOBYTE(v17) = 23;
+    }
+    else
+    {
+      LOBYTE(v17) = 22;
+    }
+LABEL_78:
+    a3[v10] = v17;
+LABEL_82:
+    ++v10;
+LABEL_83:
+    ++v9;
+    ++a1;
+    if ( v9 >= 0x1D )
+    {
+      if ( v8 == 4 && v10 == 25 )
+      {
+        *a5 = v7;
+        goto LABEL_88;
+      }
+      break;
+    }
+  }
+  v5 = -2147217327;
+  sub_1800038E8(-2147217327);
+LABEL_88:
+  sub_180003B30(v5);
+  return v5;
+}
+__int64 __fastcall sub_18000890C(_WORD *a1, _OWORD *a2, __int64 a3, _DWORD *a4)
+{
+  _WORD *v7; // rax
+  __int64 v8; // rcx
+  int v9; // eax
+  unsigned int v10; // ebx
+  int v11; // ecx
+  char *v12; // r9
+  unsigned int v13; // edx
+  unsigned int i; // r10d
+  unsigned int v15; // r8d
+  __int128 *v16; // r11
+  __int64 v17; // rdi
+  unsigned int v18; // r8d
+  __int64 v19; // rax
+  __int128 v21; // [rsp+38h] [rbp-60h] BYREF
+  char v22[32]; // [rsp+48h] [rbp-50h] BYREF
+
+  if ( !a1 )
+    goto LABEL_19;
+  v7 = a1;
+  v8 = 30i64;
+  do
+  {
+    if ( !*v7 )
+      break;
+    ++v7;
+    --v8;
+  }
+  while ( v8 );
+  if ( !v8 || ((30 - v8) & ((unsigned __int128)-(__int128)(unsigned __int64)v8 >> 64)) != 29 )
+  {
+LABEL_19:
+    v11 = -2147217327;
+    v10 = -2147217327;
+    goto LABEL_20;
+  }
+  v9 = sub_180008DB4(a1, 29i64, v22);
+  v10 = v9;
+  if ( v9 < 0 )
+  {
+    v11 = v9;
+LABEL_20:
+    sub_1800038E8(v11);
+    goto LABEL_21;
+  }
+  v12 = v22;
+  v21 = 0i64;
+  v13 = 0;
+  for ( i = 0; i < 0x19; ++i )
+  {
+    v15 = (unsigned __int8)*v12;
+    if ( v13 )
+    {
+      v16 = &v21;
+      v17 = v13;
+      do
+      {
+        v18 = v15 + 24 * *(unsigned __int8 *)v16;
+        *(_BYTE *)v16 = v18;
+        v16 = (__int128 *)((char *)v16 + 1);
+        v15 = v18 >> 8;
+        --v17;
+      }
+      while ( v17 );
+    }
+    if ( v15 )
+    {
+      if ( v13 >= 0x10 )
+        goto LABEL_19;
+      v19 = v13++;
+      v22[v19 - 16] = v15;
+    }
+    ++v12;
+  }
+  *a2 = v21;
+  if ( a4 )
+    *a4 = 0;
+LABEL_21:
+  sub_180003B30(v10);
+  return v10;
+}
  
  /**
  * Origin: Sppobjs.dll
@@ -171,6 +574,51 @@ NTSTATUS EncodeProductKey(const wchar_t* key, u128* outBin, DWORD* outType) {
  * Takes the String (input) and packs it into Binary (storage).
  */
  
+ __int64 __fastcall sub_18008A114(int a1)
+{
+  __int64 result; // rax
+
+  result = (unsigned int)dword_1801A47C4;
+  if ( dword_1801A47C4 && a1 < 0 && (dword_1801A47C4 == a1 || dword_1801A47C4 == -1) )
+    __debugbreak();
+  return result;
+}
+ __int64 __fastcall sub_1800943F0(__int64 a1, unsigned __int64 a2, _QWORD *a3)
+{
+  __int64 result; // rax
+
+  if ( a1 && a2 <= 0x7FFFFFFF )
+    result = sub_180094468(a1, a2);
+  else
+    result = 2147942487i64;
+  if ( (int)result < 0 )
+  {
+    if ( a3 )
+      *a3 = 0i64;
+  }
+  return result;
+}
+ __int64 __fastcall sub_180094468(_WORD *a1, __int64 a2, _QWORD *a3)
+{
+  __int64 i; // r9
+  __int64 result; // rax
+
+  for ( i = a2; a2; --a2 )
+  {
+    if ( !*a1 )
+      break;
+    ++a1;
+  }
+  result = a2 == 0 ? 0x80070057 : 0;
+  if ( a3 )
+  {
+    if ( a2 )
+      *a3 = i - a2;
+    else
+      *a3 = 0i64;
+  }
+  return result;
+}
  _BOOL8 __fastcall sub_18013CD18(__int16 a1)
 {
   return ((a1 - 78) & 0xFFDF) == 0;
