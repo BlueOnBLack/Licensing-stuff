@@ -167,55 +167,292 @@ NTSTATUS EncodeProductKey(const wchar_t* key, u128* outBin, DWORD* outType) {
  
  /**
  * Origin: Sppobjs.dll
- * __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryDecode(__m128i *a1)
+ * __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryEncode(__m128i *a1)
+ * Takes the String (input) and packs it into Binary (storage).
  */
  
-// MSVC doesn't support __int128 natively. Use a struct to match __m128i.
-struct u128 {
-    unsigned char data[16];
-};
+ _BOOL8 __fastcall sub_18013CD18(__int16 a1)
+{
+  return ((a1 - 78) & 0xFFDF) == 0;
+}
+__int64 __fastcall sub_18013CFC4(unsigned __int16 a1)
+{
+  int v2; // edx
+  int v3; // edx
 
-// Original Name: sub_18013C8DC
-std::wstring DecodeProductKey(u128 bin) {
-    unsigned char bytes[16];
-    memcpy(bytes, bin.data, 16);
-
-    bool hasN = (bytes[14] & 0x08) != 0;
-    int nPos = bytes[15];
-    bytes[14] &= 0xF7;
-    bytes[15] = 0;
-
-    wchar_t raw[27] = { 0 }; // Extra space for safety
-    const wchar_t* alphabet = L"BCDFGHJKMPQRTVWXY2346789";
-
-    for (int i = 24; i >= 0; i--) {
-        unsigned int rem = 0;
-        for (int j = 15; j >= 0; j--) {
-            unsigned int val = bytes[j] + (rem << 8);
-            bytes[j] = (unsigned char)(val / 24);
-            rem = val % 24;
+  if ( a1 <= 0x56u )
+  {
+    if ( a1 != 86 )
+    {
+      if ( a1 <= 0x44u )
+      {
+        if ( a1 != 68 )
+        {
+          if ( a1 <= 0x37u )
+          {
+            switch ( a1 )
+            {
+              case '7':
+                return 21i64;
+              case '-':
+                return 24i64;
+              case '2':
+                return 17i64;
+              case '3':
+                return 18i64;
+              case '4':
+                return 19i64;
+              case '6':
+                return 20i64;
+            }
+            return 25i64;
+          }
+          if ( a1 == 56 )
+            return 22i64;
+          v2 = a1 - 57;
+          if ( a1 == 57 )
+            return 23i64;
+LABEL_20:
+          v3 = v2 - 9;
+          if ( !v3 )
+            return 0i64;
+          if ( v3 == 1 )
+            return 1i64;
+          return 25i64;
         }
-        raw[i] = alphabet[rem];
+        return 2i64;
+      }
+      if ( a1 <= 0x4Du )
+      {
+        if ( a1 != 77 )
+        {
+          if ( a1 != 70 )
+          {
+            if ( a1 != 71 )
+            {
+              if ( a1 != 72 )
+              {
+                if ( a1 != 74 )
+                {
+                  if ( a1 == 75 )
+                    return 7i64;
+                  return 25i64;
+                }
+                return 6i64;
+              }
+              return 5i64;
+            }
+            return 4i64;
+          }
+          return 3i64;
+        }
+        return 8i64;
+      }
+      if ( a1 != 80 )
+      {
+        if ( a1 != 81 )
+        {
+          if ( a1 != 82 )
+          {
+            if ( a1 != 84 )
+              return 25i64;
+            return 12i64;
+          }
+          return 11i64;
+        }
+        return 10i64;
+      }
+      return 9i64;
     }
+    return 13i64;
+  }
+  if ( a1 <= 0x6Bu )
+  {
+    if ( a1 == 107 )
+      return 7i64;
+    if ( a1 > 0x64u )
+    {
+      if ( a1 != 102 )
+      {
+        if ( a1 != 103 )
+        {
+          if ( a1 != 104 )
+          {
+            if ( a1 != 106 )
+              return 25i64;
+            return 6i64;
+          }
+          return 5i64;
+        }
+        return 4i64;
+      }
+      return 3i64;
+    }
+    if ( a1 == 100 )
+      return 2i64;
+    if ( a1 != 87 )
+    {
+      if ( a1 != 88 )
+      {
+        v2 = a1 - 89;
+        if ( a1 != 89 )
+          goto LABEL_20;
+        return 16i64;
+      }
+      return 15i64;
+    }
+    return 14i64;
+  }
+  if ( a1 != 109 )
+  {
+    switch ( a1 )
+    {
+      case 'p':
+        return 9i64;
+      case 'q':
+        return 10i64;
+      case 'r':
+        return 11i64;
+      case 't':
+        return 12i64;
+      case 'v':
+        return 13i64;
+    }
+    if ( a1 != 119 )
+    {
+      if ( a1 != 120 )
+      {
+        if ( a1 != 121 )
+          return 25i64;
+        return 16i64;
+      }
+      return 15i64;
+    }
+    return 14i64;
+  }
+  return 8i64;
+}
+char __fastcall sub_18013D1B4(_BYTE *a1, __int64 a2)
+{
+  char result; // al
 
-    std::wstring res(raw);
-    if (hasN) {
-        res.erase(0, 1);
-        res.insert(nPos, 1, L'N');
-    }
+  result = (*(_BYTE *)(a2 + 14) ^ (8 * *a1)) & 8;
+  *(_BYTE *)(a2 + 14) ^= result;
+  return result;
+}
+__int64 __fastcall sub_1800943F0(_WORD *a1, unsigned __int64 a2, _QWORD *a3)
+{
+  __int64 result; // rax
 
-    std::wstring formatted = L"";
-    for (int i = 0; i < 25; i++) {
-        if (i > 0 && i % 5 == 0) formatted += L'-';
-        formatted += res[i];
+  if ( a1 && a2 <= 0x7FFFFFFF )
+    result = sub_180094468(a1, a2, a3);
+  else
+    result = 2147942487i64;
+  if ( (int)result < 0 )
+  {
+    if ( a3 )
+      *a3 = 0i64;
+  }
+  return result;
+}
+__int64 __fastcall sub_18013CC20(unsigned __int16 *a1, __int64 a2, _BYTE *a3, __int64 a4, int *a5)
+{
+  unsigned int v5; // ebx
+  int v7; // r14d
+  unsigned int v8; // ebp
+  unsigned int v9; // esi
+  unsigned int v10; // edi
+  unsigned int v12; // eax
+  int v13; // eax
+
+  v5 = 0;
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  while ( v10 < 0x19 )
+  {
+    if ( (unsigned int)sub_18013CD18(*a1) )
+    {
+      if ( v7 || v10 >= 0x18 )
+        break;
+      v7 = 1;
+      memmove(a3 + 1, a3, v10);
+      *a3 = v10;
     }
-    return formatted;
+    else
+    {
+      v12 = sub_18013CFC4(*a1);
+      if ( v12 >= 0x18 )
+      {
+        if ( v12 != 24 )
+          break;
+        if ( v9 > 0x17 )
+          break;
+        v13 = 8521760;
+        if ( !_bittest(&v13, v9) || v8 >= 4 )
+          break;
+        ++v8;
+        goto LABEL_15;
+      }
+      a3[v10] = v12;
+    }
+    ++v10;
+LABEL_15:
+    ++v9;
+    ++a1;
+    if ( v9 >= 0x1D )
+    {
+      if ( v8 == 4 && v10 == 25 )
+      {
+        *a5 = v7;
+        goto LABEL_20;
+      }
+      break;
+    }
+  }
+  v5 = -2147217327;
+  sub_18008A114(-2147217327);
+LABEL_20:
+  sub_18008D904(v5);
+  return v5;
 }
 
-// Original from sppwinob.dll, Windws 8 Beta 7850
-// Windows 8 Build 7850 Symbols (x64 Fre)
-// https://archive.org/details/Win8_7850_x64fre_symbols
+/**
+ * Origin: Sppwinob.dll <Windws 8 Beta 7850>
+ * __int64 __fastcall ProductKeyHelpers_BinaryDecode(__int128 *a1, unsigned __int16 **a2)
+ * int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryDecode(__int128 *a1, unsigned __int16 **a2)
+ * Takes the String (input) and packs it into Binary (storage).
+ */
 
+__int64 __fastcall ProductKeyHelpers_BinaryDecode(__int128 *a1, unsigned __int16 **a2)
+{
+  __int64 v2; // rcx
+  unsigned int v3; // ebx
+  int v4; // eax
+
+  if ( a1 && a2 )
+  {
+    v4 = CProductKeyUtilsT<CEmptyType>::BinaryDecode(a1, a2);
+    v3 = v4;
+    if ( v4 >= 0 )
+      return v3;
+    v2 = (unsigned int)v4;
+  }
+  else
+  {
+    v2 = 2147942487i64;
+    v3 = -2147024809;
+  }
+  CBreakOnFailureT<CEmptyType>::CheckToBreakOnFailure(v2);
+  if ( WPP_GLOBAL_Control != &WPP_GLOBAL_Control && (*((_BYTE *)WPP_GLOBAL_Control + 68) & 2) != 0 )
+    WARBIRD::g_IndirectBranchTargets8(
+      *((_QWORD *)WPP_GLOBAL_Control + 7),
+      10i64,
+      WPP_40bb4e7f9098b02c05e351ec6325e929_Traceguids,
+      v3);
+  return v3;
+}
 __int64 __fastcall CProductKeyUtilsT<CEmptyType>::BinaryDecode(__int128 *a1, unsigned __int16 **a2)
 {
   unsigned __int16 *v2; // rbx
