@@ -259,12 +259,8 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     // =========================================================
     // 3. BUILD CHECK VALUE (var50)
     // =========================================================
-    uint8_t check_hi =
-        (uint8_t)((b13 >> 7) | ((r8b & 1) << 1));
-
-    uint8_t check_lo =
-        (uint8_t)((b13 << 1) | (b12 >> 7));
-
+    uint8_t check_hi = (uint8_t)((b13 >> 7) | ((r8b & 1) << 1));
+    uint8_t check_lo = (uint8_t)((b13 << 1) | (b12 >> 7));
     uint16_t check_value = ((uint16_t)check_hi << 8) | check_lo;
 
     // =========================================================
@@ -273,7 +269,8 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     tmp[12] &= 0x7F;
     tmp[13] = 0;
 
-    uint8_t tmp14 = (r8b & 1) ^ r8b;
+    uint8_t tmp14 = r8b & ~1;
+    //uint8_t tmp14 = (r8b & 1) ^ r8b;
     tmp[14] = tmp14;
 
     // =========================================================
@@ -306,7 +303,9 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     // =========================================================
     // 8. COPY HEADER WORD
     // =========================================================
-    *(uint16_t*)&outA[0] = *(uint16_t*)&tmp[0];
+    memcpy(&outA[0], &tmp[0], 2);
+    //*(uint16_t*)&outA[0] = *(uint16_t*)&tmp[0];
+    
 
     // =========================================================
     // 9. BYTE MIX STEP
@@ -314,9 +313,9 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     {
         uint8_t a = tmp[2];
         uint8_t b = outA[2];
-
-        uint8_t x = (a ^ b) & 0x0F;
-        outA[2] = b ^ x;
+        //outA[2] = tmp[2];
+        outA[2] = tmp[2] & 0x0F;
+        //outA[2] = (tmp[2] ^ outA[2]) & 0x0F;
     }
 
     // =========================================================
@@ -334,8 +333,7 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     // 11. BYTE 7 MIX
     // =========================================================
     {
-        uint8_t mix = (tmp[6] << 4) | (tmp[5] >> 4);
-
+        uint8_t mix = (uint8_t)((tmp[6] << 4) | ((int8_t)tmp[5] >> 4));
         outA[7] = (outA[7] & 0xC0) ^ (mix & 0x3F);
     }
 
@@ -353,10 +351,13 @@ HRESULT ValidateAndUnswizzle(DECODED_DATA* pIn, uint8_t* pOut32, uint32_t* pHash
     // =========================================================
     // 13. FINAL ADJUSTMENTS
     // =========================================================
-    outB[6] = (tmp[12] >> 2) & 0x1F;
+    // var_30+6 is outB[6]
+    uint8_t val12 = tmp[12] >> 2;
+    outB[6] = outB[6] ^ ((outB[6] ^ val12) & 0x1F);
 
-    uint8_t high_bit = (uint8_t)(high >> 56);
-    outA[8] = (tmp14 >> 1) & 1;
+    // var_40+8 is outA[8]
+    uint8_t sil_final = r8b >> 1;
+    outA[8] = outA[8] ^ ((outA[8] ^ sil_final) & 0x01);
 
     // =========================================================
     // 14. OUTPUT WRITEBACK
@@ -436,71 +437,62 @@ HRESULT __fastcall CompressKey(const wchar_t* szKey, DECODED_DATA* pOutRaw, int*
 // sub_180008A58
 __int32 __fastcall UnpackLicenseContext(unsigned char* pDecodedKey, byte* pContext)
 {
-    // var_20 is an 8-byte qword, var_17 starts right after it, totaling 16 bytes of scratch space.
-    uint8_t tmp[16];
-    memset(tmp, 0, 16);
+    // Work buffer for the 13-byte reconstructed license stream
+    uint8_t bitStream[16];
+    memset(bitStream, 0, sizeof(bitStream));
 
-    // .text:180008A7E - cmp [rcx+8], eax / setnz byte ptr [rbp+var_20]
-    // Sets the first byte of tmp to 1 if the unswizzled data at offset 8 is non-zero.
-    tmp[0] = (*(uint32_t*)(pDecodedKey + 8) != 0) ? 1 : 0;
+    // 1. Initial State: Check existence of extended data at offset 8
+    bitStream[0] = (*(uint32_t*)(pDecodedKey + 8) != 0) ? 1 : 0;
 
-    // --- LOOP 1: Shift Left 1 (.text:180008AA7) ---
-    // This loop takes 3 bytes starting at pDecodedKey[4] and merges them into tmp[0-3]
+    // 2. Unpack Block A: 1-bit Left Shift
+    // Merges pDecodedKey[4-6] into bitStream[0-3]
     for (int i = 0; i < 3; ++i) {
-        uint8_t val = pDecodedKey[i + 4];
-        tmp[i] = (tmp[i] & 1) | (uint8_t)(val << 1);    // or [r8], al (al = cl + cl)
-        tmp[i + 1] = (uint8_t)(val >> 7);               // or [r9], cl (cl >> 7)
+        uint8_t sourceByte = pDecodedKey[i + 4];
+        bitStream[i] = (bitStream[i] & 0x01) | (sourceByte << 1);
+        bitStream[i + 1] = (sourceByte >> 7);
     }
 
-    // --- THE PIVOT: Byte 3 (.text:180008ACC) ---
-    // Specifically modifies the 4th byte of the scratch buffer using pDecodedKey[7]
-    uint8_t key7 = pDecodedKey[7];
-    uint8_t current3 = tmp[3];
-    // .text:180008AE0 - xor cl, al / and cl, 7Eh / xor al, cl
-    // This is a bitwise "mask move": tmp[3] bits 1-6 come from (key7 << 1)
-    tmp[3] = current3 ^ ((current3 ^ (key7 << 1)) & 0x7E);
+    // 3. Patching Block A: Insert bits from Key[7] into Stream[3]
+    // Preserves bits 0 and 7 of Stream[3], overwrites bits 1-6
+    uint8_t bridgeBits = pDecodedKey[7] << 1;
+    bitStream[3] = (bitStream[3] & 0x81) | (bridgeBits & 0x7E);
 
-    // --- LOOP 2: Shift Left 7 (.text:180008AF7) ---
-    // Processes 2 bytes starting at pDecodedKey[3] (yes, it goes backward in the key)
+    // 4. Unpack Block B: 7-bit Left Shift
+    // Merges pDecodedKey[3-4] into bitStream[3-5]
     for (int i = 0; i < 2; ++i) {
-        uint8_t val = pDecodedKey[i + 3];
-        tmp[i + 3] = (tmp[i + 3] & 0x7F) | (uint8_t)(val << 7);
-        tmp[i + 4] = (tmp[i + 4] & 0x80) | (uint8_t)(val >> 1);
+        uint8_t sourceByte = pDecodedKey[i + 3];
+        bitStream[i + 3] = (bitStream[i + 3] & 0x7F) | (sourceByte << 7);
+        bitStream[i + 4] = (bitStream[i + 4] & 0x80) | (sourceByte >> 1);
     }
 
-    // --- METADATA: Byte 2 (.text:180008B1A) ---
-    uint8_t key2 = pDecodedKey[2];
-    // tmp[5] high bit comes from key2 low bit
-    tmp[5] = (tmp[5] & 0x7F) | (key2 << 7);
-    // tmp[6] low 3 bits come from key2 bits 1-3
-    tmp[6] = tmp[6] ^ ((tmp[6] ^ (key2 >> 1)) & 7);
+    // 5. Unpack Metadata: Align bits from Key[2]
+    uint8_t metaByte = pDecodedKey[2];
+    bitStream[5] = (bitStream[5] & 0x7F) | (metaByte << 7);        // High bit
+    bitStream[6] = (bitStream[6] & 0xF8) | ((metaByte >> 1) & 0x07); // Low 3 bits
 
-    // --- LOOP 3: Shift Left 3 (.text:180008B5B) ---
-    // Processes 6 bytes starting at pDecodedKey[16]
+    // 6. Unpack Block C: 3-bit Left Shift
+    // Merges pDecodedKey[16-21] into bitStream[6-12]
     for (int i = 0; i < 6; ++i) {
-        uint8_t val = pDecodedKey[i + 16];
-        tmp[i + 6] = (tmp[i + 6] & 7) | (uint8_t)(val << 3);
-        tmp[i + 7] = (tmp[i + 7] & 0xF8) | (uint8_t)(val >> 5);
+        uint8_t sourceByte = pDecodedKey[i + 16];
+        bitStream[i + 6] = (bitStream[i + 6] & 0x07) | (sourceByte << 3);
+        bitStream[i + 7] = (bitStream[i + 7] & 0xF8) | (sourceByte >> 5);
     }
 
-    // --- FINAL PACKING (.text:180008B86) ---
-    // Writes the results into the provided LICENSE_CONTEXT structure
+    // --- FINAL PACKING TO CONTEXT ---
 
-    // Offset 0x00: First 8 bytes (tmp[0] to tmp[7])
-    *(uint64_t*)((uint8_t*)pContext + 0x00) = *(uint64_t*)&tmp[0];
+    // Write primary 8-byte QWORD (Offsets 0.0 - 0.7)
+    *(uint64_t*)(pContext + 0x00) = *(uint64_t*)&bitStream[0];
 
-    // Offset 0x08: Next 4 bytes (tmp[8] to tmp[11])
-    *(uint32_t*)((uint8_t*)pContext + 0x08) = *(uint32_t*)&tmp[8];
+    // Write secondary 4-byte DWORD (Offsets 0.8 - 0.B)
+    *(uint32_t*)(pContext + 0x08) = *(uint32_t*)&bitStream[8];
 
-    // Offset 0x0C: Final byte 
-    // .text:180008B7F - mov cl, [r11+6] (r11 was key+0x10, so key[0x16] = 22)
-    uint8_t key22 = pDecodedKey[22];
-    uint8_t tmp12 = tmp[12] & 7;
-    ((uint8_t*)pContext)[0x0C] = (key22 << 3) | tmp12;
+    // Write final byte (Offset 0.C)
+    // Combines Key[22] with the remainder of our bitStream
+    uint8_t finalKeyByte = pDecodedKey[22];
+    uint8_t streamRemnant = bitStream[12] & 0x07;
+    pContext[0x0C] = (finalKeyByte << 3) | streamRemnant;
 
-    // Cleanup call
-
-    return 0;
+    return 0; // Success
 }
 
 // KeyInfo. BOB [MDL]
@@ -649,7 +641,7 @@ HRESULT DecodeLicenseContext(
 }
 
 int main() {
-    
+
     /*
         Key      : K8KNG-MGG4H-KX82M-M8QYW-DGRFH
         Integer  : 4441847703199715836355246925287693
